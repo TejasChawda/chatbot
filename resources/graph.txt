@@ -1,0 +1,42 @@
+        df = pd.read_csv('/Users/testvagrant/Desktop/chatbot/src/data_frame.csv')
+        df['Points'] = df['Points'].str.wrap(30) 
+        df['Points'] = df['Points'].str.replace('\n', '<br>') 
+        df['Scale'] = df['Scale'].str.wrap(10) 
+        df['Scale'] = df['Scale'].str.replace('\n', '<br>') 
+        df['Value'] = df['Value'] + 0.01
+
+        custom_colors = [      
+            'rgb(255, 0, 0)',   # Red
+            'rgb(255, 80, 0)',  # Orange-Red
+            'rgb(255, 120, 0)', # Orange
+            'rgb(255, 180, 0)', # Orange-Yellow
+            'rgb(255, 220, 0)', # Yellow
+            'rgb(200, 220, 0)', # Yellow-Green
+            'rgb(150, 220, 0)', # Lime Green
+            'rgb(0, 128, 0)', 'rgb(0, 128, 0)'
+        ]
+
+        fig = px.sunburst(
+            data_frame=df,
+            path=['Scale', 'Levels', 'Points'],
+            values='Value',
+            maxdepth=-2,
+            width=800,
+            height=800,
+            color='Value', 
+            custom_data=['Points', 'Questions'],
+            color_continuous_scale=custom_colors, # Show label, value, and parent on hover
+        )
+
+        fig.update_traces(
+            textfont_size=12,
+            insidetextorientation='radial', 
+            textinfo='label+text+percent entry',  
+        )
+
+        fig.update_layout(
+            margin=dict(l=10, r=10, b=10, t=10),  # Adjust the values to control spacing
+        )
+        st.plotly_chart(fig, use_container_width=True)
+
+ 

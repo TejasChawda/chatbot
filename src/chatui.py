@@ -68,6 +68,7 @@ else:
     # Update current_level based on accuracy
     if accuracy > 70:
         st.session_state.current_level += 1
+        # ------------------------------------------------graph code
         if st.session_state.current_level == 5:
             df = pd.read_csv('/Users/testvagrant/Desktop/chatbot/src/data_frame.csv')
             df['Points'] = df['Points'].str.wrap(30) 
@@ -109,9 +110,11 @@ else:
                 margin=dict(l=10, r=10, b=10, t=10),  # Adjust the values to control spacing
             )
             st.plotly_chart(fig, use_container_width=True)
+        
+        # graph code end here----------------------------------------
         st.write(f"Congratulations! You've reached Level {st.session_state.current_level}")
     else:
-        st.session_state.current_level -= 1
+        st.session_state.current_level = 1
         st.write(f"You need to review Level {st.session_state.current_level}")
 
     # Fetch questions for the updated level
